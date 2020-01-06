@@ -3,35 +3,18 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { graphql } from "gatsby";
 import styled from "@emotion/styled";
-import dimensions from "styles/dimensions";
 import Layout from "components/Layout";
-import PostCard from "components/PostCard";
+import EventCard from "components/EventCard";
 
-const BlogTitle = styled("h1")`
+const EventsTitle = styled("h1")`
     margin-bottom: 1em;
 `
 
-const BlogGrid = styled("div")`
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 2.5em;
-
-    @media(max-width: 1050px) {
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 1.5em;
-    }
-
-    @media(max-width: ${dimensions.maxwidthMobile}px) {
-        grid-template-columns: 1fr;
-        grid-gap: 2.5em;
-    }
-`
-
-const Blog = ({ posts, meta }) => (
+const Events = ({ events, meta }) => (
     <>
         <Helmet
-            title={`Blog | Prist, Gatsby & Prismic Starter`}
-            titleTemplate={`%s | Blog | Prist, Gatsby & Prismic Starter`}
+            title={`Events | Prist, Gatsby & Prismic Starter`}
+            titleTemplate={`%s | Events | Prist, Gatsby & Prismic Starter`}
             meta={[
                 {
                     name: `description`,
@@ -39,7 +22,7 @@ const Blog = ({ posts, meta }) => (
                 },
                 {
                     property: `og:title`,
-                    content: `Blog | Prist, Gatsby & Prismic Starter`,
+                    content: `Events | Prist, Gatsby & Prismic Starter`,
                 },
                 {
                     property: `og:description`,
@@ -68,53 +51,50 @@ const Blog = ({ posts, meta }) => (
             ].concat(meta)}
         />
         <Layout>
-            <BlogTitle>
-                Blog
-            </BlogTitle>
-            <BlogGrid>
-                {posts.map((post, i) => (
-                    <PostCard
+            <EventsTitle>
+                Events
+            </EventsTitle>
+            <>
+                {events.map((event, i) => (
+                    <EventCard
                         key={i}
-                        author={post.node.post_author}
-                        category={post.node.post_category}
-                        title={post.node.post_title}
-                        date={post.node.post_date}
-                        description={post.node.post_preview_description}
-                        uid={post.node._meta.uid}
+                        category={event.node.event_category}
+                        title={event.node.event_title}
+                        description={event.node.event_preview_description}
+                        thumbnail={event.node.event_preview_thumbnail}
+                        uid={event.node._meta.uid}
                     />
                 ))}
-            </BlogGrid>
+            </>
         </Layout>
     </>
 );
 
 export default ({ data }) => {
-    const posts = data.prismic.allPosts.edges;
+    const events = data.prismic.allEvents.edges;
     const meta = data.site.siteMetadata;
-    if (!posts) return null;
+    if (!events) return null;
 
     return (
-        <Blog posts={posts} meta={meta}/>
+        <Events events={events} meta={meta}/>
     )
 }
 
-Blog.propTypes = {
-    posts: PropTypes.array.isRequired,
-    meta: PropTypes.object.isRequired,
+Events.propTypes = {
+    events: PropTypes.array.isRequired,
 };
-
 
 export const query = graphql`
     {
         prismic {
-            allPosts(sortBy: post_date_DESC) {
+            allEvents {
                 edges {
                     node {
-                        post_title
-                        post_date
-                        post_category
-                        post_preview_description
-                        post_author
+                        event_title
+                        event_preview_description
+                        event_preview_thumbnail
+                        event_category
+                        event_post_date
                         _meta {
                             uid
                         }

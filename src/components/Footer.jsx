@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import colors from "styles/colors";
 import Logo from "components/_ui/Logo";
 import spooch from "images/oscar-icon.png"
+import SocialMediaIcons from 'react-social-media-icons';
 
 const FooterContainer = styled("div")`
     padding-top: 3.75em;
@@ -48,13 +49,33 @@ const FooterSpooch = styled("img")`
     margin-top: 0.25em;
 `
 
+const socialMediaIcons = [
+  {
+    url: 'https://github.com/andrewgbliss',
+    className: 'fa-github-square',
+  },
+  {
+    url: 'https://gitlab.com/andrewgbliss',
+    className: 'fa-gitlab',
+  },
+  {
+    url: 'https://www.npmjs.com/~andrewgbliss',
+    className: 'fa-npm',
+  },
+];
+
 const Footer = () => (
     <FooterContainer>
         <Link to="/">
             <Logo />
         </Link>
-        <FooterAuthor href="https://marguerite.io">
-            © 2019 — Designed & developed by Marguerite Roth
+        <SocialMediaIcons
+          icons={socialMediaIcons}
+          iconSize={'1.3em'}
+          iconColor={'#495056'}
+        />
+        <FooterAuthor href="https://twitter.com/harsimus">
+            © 2020 — Developed by Harsimus
             <FooterSpooch className="FooterSpooch" src={spooch} />
         </FooterAuthor>
     </FooterContainer>

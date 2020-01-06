@@ -10,6 +10,7 @@ import Button from "components/_ui/Button";
 import About from "components/About";
 import Layout from "components/Layout";
 import ProjectCard from "components/ProjectCard";
+import EventCard from "components/EventCard";
 
 const Hero = styled("div")`
     padding-top: 2.5em;
@@ -93,7 +94,7 @@ const WorkAction = styled(Link)`
     }
 `
 
-const RenderBody = ({ home, projects, meta }) => (
+const RenderBody = ({ home, projects, events, meta }) => (
     <>
         <Helmet
             title={meta.title}
@@ -145,7 +146,7 @@ const RenderBody = ({ home, projects, meta }) => (
             </a>
         </Hero>
         <Section>
-            {projects.map((project, i) => (
+            {projects.reverse().map((project, i) => (
                 <ProjectCard
                     key={i}
                     category={project.node.project_category}
@@ -157,6 +158,21 @@ const RenderBody = ({ home, projects, meta }) => (
             ))}
             <WorkAction to={"/work"}>
                 See more work <span>&#8594;</span>
+            </WorkAction>
+        </Section>
+        <Section>
+            {events.reverse().map((event, i) => (
+                <EventCard
+                    key={i}
+                    category={event.node.event_category}
+                    title={event.node.event_title}
+                    description={event.node.event_preview_description}
+                    thumbnail={event.node.event_preview_thumbnail}
+                    uid={event.node._meta.uid}
+                />
+            ))}
+            <WorkAction to={"/events"}>
+                See more events <span>&#8594;</span>
             </WorkAction>
         </Section>
         <Section>
@@ -173,13 +189,14 @@ export default ({ data }) => {
     //Required check for no data being returned
     const doc = data.prismic.allHomepages.edges.slice(0, 1).pop();
     const projects = data.prismic.allProjects.edges;
+    const events = data.prismic.allEvents.edges;
     const meta = data.site.siteMetadata;
 
     if (!doc || !projects) return null;
 
     return (
         <Layout>
-            <RenderBody home={doc.node} projects={projects} meta={meta}/>
+            <RenderBody home={doc.node} projects={projects} events={events} meta={meta}/>
         </Layout>
     )
 }
@@ -187,6 +204,7 @@ export default ({ data }) => {
 RenderBody.propTypes = {
     home: PropTypes.object.isRequired,
     projects: PropTypes.array.isRequired,
+    events: PropTypes.array.isRequired,
     meta: PropTypes.object.isRequired,
 };
 
@@ -221,6 +239,20 @@ export const query = graphql`
                         project_preview_thumbnail
                         project_category
                         project_post_date
+                        _meta {
+                            uid
+                        }
+                    }
+                }
+            }
+            allEvents {
+                edges {
+                    node {
+                        event_title
+                        event_preview_description
+                        event_preview_thumbnail
+                        event_category
+                        event_post_date
                         _meta {
                             uid
                         }
