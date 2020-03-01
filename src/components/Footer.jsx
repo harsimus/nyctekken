@@ -30,12 +30,12 @@ const FooterAuthor = styled("a")`
      &:hover {
          color: ${colors.blue900};
 
-        .FooterSpooch {
+        /* .FooterSpooch {
             animation-name: rotate;
             animation-duration: 1.5s;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
-        }
+        } */
     }
 
     @keyframes rotate {
