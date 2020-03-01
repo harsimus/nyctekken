@@ -11,6 +11,7 @@ import About from "components/About";
 import Layout from "components/Layout";
 import ProjectCard from "components/ProjectCard";
 import EventCard from "components/EventCard";
+import PostCard from "components/PostCard";
 
 const Hero = styled("div")`
     padding-top: 2.5em;
@@ -62,6 +63,10 @@ const Section = styled("div")`
     &:last-of-type {
         margin-bottom: 0;
     }
+`
+
+const SectionTitle = styled("h1")`
+    margin-bottom: 1em;
 `
 
 const WorkAction = styled(Link)`
@@ -145,21 +150,9 @@ const RenderBody = ({ home, projects, events, meta }) => (
                 </Button>
             </a>
         </Hero>
-        <Section>
-            {projects.reverse().map((project, i) => (
-                <ProjectCard
-                    key={i}
-                    category={project.node.project_category}
-                    title={project.node.project_title}
-                    description={project.node.project_preview_description}
-                    thumbnail={project.node.project_preview_thumbnail}
-                    uid={project.node._meta.uid}
-                />
-            ))}
-            <WorkAction to={"/work"}>
-                See more work <span>&#8594;</span>
-            </WorkAction>
-        </Section>
+        <SectionTitle>
+            Events
+        </SectionTitle>
         <Section>
             {events.reverse().map((event, i) => (
                 <EventCard
@@ -253,6 +246,20 @@ export const query = graphql`
                         event_preview_thumbnail
                         event_category
                         event_post_date
+                        _meta {
+                            uid
+                        }
+                    }
+                }
+            }
+            allPosts {
+                edges {
+                    node {
+                        post_title
+                        post_date
+                        post_category
+                        post_preview_description
+                        post_author
                         _meta {
                             uid
                         }

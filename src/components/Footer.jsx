@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import styled from "@emotion/styled";
 import colors from "styles/colors";
 import Logo from "components/_ui/Logo";
-import spooch from "images/oscar-icon.png"
+import spooch from "images/H-Logo.png"
 import SocialMediaIcons from 'react-social-media-icons';
 
 const FooterContainer = styled("div")`
@@ -46,7 +46,7 @@ const FooterAuthor = styled("a")`
 
 const FooterSpooch = styled("img")`
     max-width: 33px;
-    margin-top: 0.25em;
+    margin-top: 0.75em;
 `
 
 const socialMediaIcons = [
