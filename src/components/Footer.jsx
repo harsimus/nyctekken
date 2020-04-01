@@ -3,7 +3,7 @@ import { Link } from "gatsby";
 import styled from "@emotion/styled";
 import colors from "styles/colors";
 import Logo from "components/_ui/Logo";
-import spooch from "images/H-Logo.png"
+import spooch from "images/H-LOGO.png"
 import SocialMediaIcons from 'react-social-media-icons';
 
 const FooterContainer = styled("div")`
